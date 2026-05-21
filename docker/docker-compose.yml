@@ -56,7 +56,7 @@ services:
       SECURECODER_REDIS_HOST: redis
       SECURECODER_REDIS_PORT: 6379
       SECURECODER_JWT_SECRET: your-secret-key-change-in-production
-      SECURECODER_CORS_ALLOW_ORIGINS: "http://localhost:3000"
+      SECURECODER_CORS_ALLOW_ORIGINS: "${CORS_ALLOW_ORIGINS:-http://localhost:3000}"
       SECURECODER_DOCKER_HOST: unix:///var/run/docker.sock
       SECURECODER_DOCKER_NETWORK: securecoder-labs
     ports:
@@ -79,7 +79,7 @@ services:
       dockerfile: Dockerfile
     container_name: securecoder-frontend
     environment:
-      NEXT_PUBLIC_API_URL: http://localhost:8080
+      NEXT_PUBLIC_API_URL: "${NEXT_PUBLIC_API_URL:-http://localhost:8080}"
     ports:
       - "3000:3000"
     depends_on:

@@ -96,7 +96,7 @@ func Load() (*Config, error) {
 	setDefaults()
 
 	// Read from environment variables
-	viper.SetEnvPrefix("Tygrsec Academy")
+	viper.SetEnvPrefix("securecoder")
 	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 	viper.AutomaticEnv()
 
