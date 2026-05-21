@@ -503,7 +503,7 @@ function MCQAssessmentModal({
             <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-mono">
               <span>Question {currentIdx + 1} of {category.questions.length}</span>
               <div className="flex-1 flex gap-1 h-1.5 bg-muted rounded-full overflow-hidden ml-2">
-                {category.questions.map((_, i) => (
+                {category.questions.map((_: any, i: number) => (
                   <div
                     key={i}
                     className={cn(
@@ -524,7 +524,7 @@ function MCQAssessmentModal({
 
             {/* Options */}
             <div className="space-y-2.5">
-              {question.options.map((opt, oIdx) => {
+              {question.options.map((opt: string, oIdx: number) => {
                 const isSelected = selectedIdx === oIdx;
                 const isCorrectOption = oIdx === question.correctIndex;
                 return (

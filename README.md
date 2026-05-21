@@ -4,9 +4,7 @@ Tygrsec Academy is an interactive, gamified learning platform designed to teach 
 
 The platform offers a comprehensive curriculum, combining interactive multiple-choice pathways with live docker-based security sandboxes to help developers build secure software from the ground up.
 
-![Dashboard Preview](frontend/public/favicon.ico) *(Tygrsec Academy)*
 
----
 
 ## Features
 
