@@ -1,4 +1,4 @@
-# Quick Start Guide - SecureCoder Platform
+# Quick Start Guide - Tygrsec Academy Platform
 
 ## Prerequisites Check
 
@@ -31,14 +31,14 @@ If you have access to a private Docker registry or pre-built images:
 version: '3.8'
 services:
   backend:
-    image: your-registry/securecoder-backend:latest  # Pre-built image
+    image: your-registry/Tygrsec Academy-backend:latest  # Pre-built image
     ports:
       - "8080:8080"
     environment:
-      - DATABASE_URL=postgresql://securecoder:securecoder_password@postgres:5432/securecoder
+      - DATABASE_URL=postgresql://Tygrsec Academy:Tygrsec Academy_password@postgres:5432/Tygrsec Academy
   
   frontend:
-    image: your-registry/securecoder-frontend:latest  # Pre-built image
+    image: your-registry/Tygrsec Academy-frontend:latest  # Pre-built image
     ports:
       - "3000:3000"
 ```
@@ -62,7 +62,7 @@ go version
 
 **Then run backend:**
 ```bash
-cd securecoder-platform/backend
+cd Tygrsec Academy-platform/backend
 go mod download
 go run cmd/api/main.go
 ```
@@ -85,7 +85,7 @@ npm --version   # Should show 10.x.x
 
 **Then run frontend:**
 ```bash
-cd securecoder-platform/frontend
+cd Tygrsec Academy-platform/frontend
 npm install
 npm run dev
 ```
@@ -98,9 +98,9 @@ Since PostgreSQL is already running, you can:
 2. **Connect to existing DB:**
    - Host: localhost
    - Port: 5432
-   - User: securecoder
-   - Password: securecoder_password
-   - Database: securecoder
+   - User: Tygrsec Academy
+   - Password: Tygrsec Academy_password
+   - Database: Tygrsec Academy
 
 ## Manual Testing Without Running Server
 
@@ -126,7 +126,7 @@ Even without the server running, you can verify the implementation:
 **Check Go Code:**
 ```bash
 # If Go were installed:
-cd securecoder-platform/backend
+cd Tygrsec Academy-platform/backend
 go fmt ./...
 go vet ./...
 ```
@@ -134,7 +134,7 @@ go vet ./...
 **Check Frontend Code:**
 ```bash
 # If Node were installed:
-cd securecoder-platform/frontend
+cd Tygrsec Academy-platform/frontend
 npx tsc --noEmit
 ```
 
@@ -173,7 +173,7 @@ frontend/
 
 ### 1. Database Connection
 ```bash
-docker exec -it securecoder-postgres psql -U securecoder -d securecoder
+docker exec -it Tygrsec Academy-postgres psql -U Tygrsec Academy -d Tygrsec Academy
 \dt  # List tables
 \q   # Quit
 ```
@@ -181,7 +181,7 @@ docker exec -it securecoder-postgres psql -U securecoder -d securecoder
 ### 2. Verify Container is Healthy
 ```bash
 docker ps
-# Should show: securecoder-postgres (healthy)
+# Should show: Tygrsec Academy-postgres (healthy)
 ```
 
 ### 3. Port Availability

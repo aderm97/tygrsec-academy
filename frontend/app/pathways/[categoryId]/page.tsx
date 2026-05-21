@@ -5,6 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { useAuth } from "@/contexts/auth-context";
 import { cn } from "@/lib/utils";
 import { mcqCategories } from "../mcq-data";
 import { pathways } from "../pathways-data";
@@ -20,9 +21,21 @@ export default function MCQRoomPage() {
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
   const [validated, setValidated] = useState(false);
   const [hintsUsed, setHintsUsed] = useState(0);
-  const [score, setScore] = useState(200);
   const [isGraduated, setIsGraduated] = useState(false);
   const [showHintMsg, setShowHintMsg] = useState(false);
+  const { refresh } = useAuth();
+
+  const [score, setScore] = useState(() => {
+    for (const path of pathways) {
+      const idx = path.steps.findIndex(s => s.assessmentCategory === categoryId);
+      if (idx !== -1) {
+        return path.steps[idx].xp || 200;
+      }
+    }
+    return 200;
+  });
+
+  const baseXP = score; // To remember what the max XP is
 
   // Track room open
   useEffect(() => {
@@ -63,14 +76,13 @@ export default function MCQRoomPage() {
   // Find step in pathways matching this categoryId
   let foundPathwayId = "";
   let foundStepIdx = -1;
-  let foundXP = 200;
+  let foundXP = score;
 
   for (const path of pathways) {
     const idx = path.steps.findIndex(s => s.assessmentCategory === categoryId);
     if (idx !== -1) {
       foundPathwayId = path.id;
       foundStepIdx = idx;
-      foundXP = path.steps[idx].xp;
       break;
     }
   }
@@ -104,11 +116,12 @@ export default function MCQRoomPage() {
     }
   };
 
-  const handleClaim = () => {
+  const handleClaim = async () => {
     if (foundPathwayId !== "" && foundStepIdx !== -1) {
       const wasCompleted = isStepCompleted(foundPathwayId, foundStepIdx);
       if (!wasCompleted) {
-        completeStep(foundPathwayId, foundStepIdx, 120, score);
+        await completeStep(foundPathwayId, foundStepIdx, 120, score);
+        refresh(); // Make sure user XP updates in header
       }
     }
     router.push("/pathways");
@@ -314,7 +327,7 @@ export default function MCQRoomPage() {
             <div className="border border-border rounded-xl p-5 bg-card space-y-4">
               <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider font-mono">Self-Assessment Rules</h3>
               <ul className="space-y-2.5 text-xs text-muted-foreground list-disc pl-4 leading-relaxed">
-                <li>Every self-assessment category begins with a running potential score of <strong>200 XP</strong>.</li>
+                <li>Every self-assessment category begins with a running potential score of <strong>{foundXP} XP</strong>.</li>
                 <li>Choosing an incorrect option and validating will deduct <strong>-20 XP</strong> from the reward potential.</li>
                 <li>Requesting a defensive hint will deduct <strong>-10 XP</strong> from the reward potential.</li>
                 <li>A floor limit of <strong>50 XP</strong> is guaranteed even in the case of multiple wrong trials.</li>

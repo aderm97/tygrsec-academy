@@ -18,9 +18,9 @@ netstat -ano | findstr :6379  # Redis
 Create `.env` file in `docker/` directory:
 ```env
 # Database
-POSTGRES_USER=securecoder
-POSTGRES_PASSWORD=securecoder_password
-POSTGRES_DB=securecoder
+POSTGRES_USER=Tygrsec Academy
+POSTGRES_PASSWORD=Tygrsec Academy_password
+POSTGRES_DB=Tygrsec Academy
 
 # JWT
 JWT_SECRET=your-super-secret-key-min-32-characters
@@ -37,7 +37,7 @@ GITHUB_CLIENT_SECRET=test
 
 #### 1.1 Docker Compose Build
 ```bash
-cd securecoder-platform/docker
+cd Tygrsec Academy-platform/docker
 docker-compose build --no-cache
 ```
 **Expected**: All services build successfully
@@ -57,7 +57,7 @@ docker-compose ps
 #### 1.3 Health Checks
 ```bash
 # PostgreSQL
-docker-compose exec postgres pg_isready -U securecoder
+docker-compose exec postgres pg_isready -U Tygrsec Academy
 
 # Redis
 docker-compose exec redis redis-cli ping
@@ -184,7 +184,7 @@ curl -X POST http://localhost:8080/api/v1/labs \
   -H "Content-Type: application/json" \
   -d '{
     "challenge_id": "<challenge_id>",
-    "image": "securecoder/sqli-basic:latest"
+    "image": "Tygrsec Academy/sqli-basic:latest"
   }'
 ```
 **Expected**: 201 Created, returns lab with status "creating"
@@ -200,7 +200,7 @@ curl http://localhost:8080/api/v1/labs/<lab_id> \
 
 #### 4.3 Verify Container Running
 ```bash
-docker ps | grep securecoder-lab
+docker ps | grep Tygrsec Academy-lab
 ```
 **Expected**: Container running on appropriate port
 **Result**: [ ] PASS / [ ] FAIL

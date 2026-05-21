@@ -614,7 +614,7 @@ export default function ChallengeDetailPage({ params }: { params: { slug: string
                     result === "correct" ? "text-emerald-500" : "text-destructive"
                   )}>
                     {result === "correct"
-                      ? "Challenge solved. +200 XP awarded."
+                      ? `Challenge solved. +${challenge.points} XP awarded.`
                       : "Incorrect flag. Review your findings."}
                   </p>
                 )}

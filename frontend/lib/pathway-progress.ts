@@ -57,7 +57,7 @@ export function getAllCompletions(): StepCompletion[] {
   return getStore().completions;
 }
 
-export function completeStep(pathwayId: string, stepIndex: number, timeSpent = 0, xpEarned = 0): void {
+export async function completeStep(pathwayId: string, stepIndex: number, timeSpent = 0, xpEarned = 0): Promise<void> {
   const store = getStore();
   // Don't duplicate
   if (store.completions.some(c => c.pathwayId === pathwayId && c.stepIndex === stepIndex)) return;
@@ -76,8 +76,8 @@ export function completeStep(pathwayId: string, stepIndex: number, timeSpent = 0
     timestamp: completion.completedAt,
   });
   setStore(store);
-  // Fire-and-forget API sync
-  syncCompletionToAPI(completion);
+  // Wait for API sync to ensure it doesn't get cancelled by navigation
+  await syncCompletionToAPI(completion);
 }
 
 

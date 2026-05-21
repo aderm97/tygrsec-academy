@@ -6,13 +6,13 @@ Since Docker is not available on this system, you can test the backend locally a
 
 ### Step 1: Check Go Installation
 ```bash
-cd securecoder-platform/backend
+cd Tygrsec Academy-platform/backend
 go version
 ```
 
 ### Step 2: Run Go Tests
 ```bash
-cd securecoder-platform/backend
+cd Tygrsec Academy-platform/backend
 
 # Download dependencies
 go mod download
@@ -110,7 +110,7 @@ Let's verify the code compiles correctly:
 
 ### Backend Code Verification
 ```bash
-cd securecoder-platform/backend
+cd Tygrsec Academy-platform/backend
 
 # Format code
 go fmt ./...
@@ -124,7 +124,7 @@ go build -o /dev/null ./...
 
 ### Frontend Code Verification
 ```bash
-cd securecoder-platform/frontend
+cd Tygrsec Academy-platform/frontend
 
 # Install dependencies (requires Node.js)
 npm install
@@ -187,8 +187,8 @@ choco install nodejs
 1. **Install Docker Desktop** from https://www.docker.com/products/docker-desktop
 2. **Restart your terminal** after installation
 3. **Run**: `docker ps` to verify Docker is working
-4. **Then run**: `cd securecoder-platform/docker && docker-compose up -d`
-5. **Finally run**: `cd securecoder-platform && ./test-suite.sh`
+4. **Then run**: `cd Tygrsec Academy-platform/docker && docker-compose up -d`
+5. **Finally run**: `cd Tygrsec Academy-platform && ./test-suite.sh`
 
 ## Alternative: Deploy to Cloud
 
