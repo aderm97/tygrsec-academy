@@ -1,4 +1,4 @@
-# 🐯 Tygrsec Academy Platform
+# Tygrsec Academy Platform
 
 Tygrsec Academy is an interactive, gamified learning platform designed to teach **Secure Coding Practices** through hands-on labs (SAST, DAST, Remediation) and OWASP-focused self-assessments. 
 
@@ -8,7 +8,7 @@ The platform offers a comprehensive curriculum, combining interactive multiple-c
 
 ---
 
-## 🚀 Features
+## Features
 
 - **Interactive Learning Pathways**: Follow structured curricula like "SAST & DAST Mastery" and "OWASP Top 10".
 - **Gamification & Leaderboard**: Earn XP, unlock levels, and compete globally on the leaderboard.
@@ -20,7 +20,7 @@ The platform offers a comprehensive curriculum, combining interactive multiple-c
 
 ---
 
-## 🏗️ Architecture Stack
+## Architecture Stack
 
 ### Backend (Go / Gin)
 - **Framework**: Go 1.21+, Gin HTTP Framework
@@ -36,7 +36,7 @@ The platform offers a comprehensive curriculum, combining interactive multiple-c
 
 ---
 
-## 🛠️ Quick Start (Development)
+## Quick Start (Development)
 
 ### Prerequisites
 - Node.js (v18+)
@@ -79,7 +79,7 @@ Visit `http://localhost:3000` to access the Tygrsec Academy dashboard.
 
 ---
 
-## 🛡️ Coding Standards & Security Audit
+## Coding Standards & Security Audit
 
 This codebase strictly adheres to the Tygrsec universal coding standards:
 - **Immutability**: No direct state mutations; safe updates via functional updaters and spread operators.
@@ -90,7 +90,7 @@ This codebase strictly adheres to the Tygrsec universal coding standards:
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
@@ -98,6 +98,6 @@ This codebase strictly adheres to the Tygrsec universal coding standards:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
