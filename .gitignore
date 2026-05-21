@@ -1,0 +1,12 @@
+﻿node_modules/
+dist/
+build/
+.env
+.env.*
+.DS_Store
+.next/
+*.log
+backend/tmp/
+backend/coverage/
+coverage/
+replace.py

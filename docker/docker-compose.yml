@@ -1,0 +1,102 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: securecoder-postgres
+    environment:
+      POSTGRES_USER: securecoder
+      POSTGRES_PASSWORD: securecoder_password
+      POSTGRES_DB: securecoder
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U securecoder"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - securecoder
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: securecoder-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - securecoder
+
+  # Backend API
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    container_name: securecoder-backend
+    environment:
+      SECURECODER_ENVIRONMENT: development
+      SECURECODER_SERVER_PORT: 8080
+      SECURECODER_DATABASE_HOST: postgres
+      SECURECODER_DATABASE_PORT: 5432
+      SECURECODER_DATABASE_USER: securecoder
+      SECURECODER_DATABASE_PASSWORD: securecoder_password
+      SECURECODER_DATABASE_NAME: securecoder
+      SECURECODER_DATABASE_SSL_MODE: disable
+      SECURECODER_REDIS_HOST: redis
+      SECURECODER_REDIS_PORT: 6379
+      SECURECODER_JWT_SECRET: your-secret-key-change-in-production
+      SECURECODER_CORS_ALLOW_ORIGINS: "http://localhost:3000"
+      SECURECODER_DOCKER_HOST: unix:///var/run/docker.sock
+      SECURECODER_DOCKER_NETWORK: securecoder-labs
+    ports:
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - securecoder
+      - securecoder-labs
+
+  # Frontend (Next.js)
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    container_name: securecoder-frontend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8080
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - securecoder
+
+  # Lab Network
+  # This is created separately for lab isolation
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  securecoder:
+    driver: bridge
+  securecoder-labs:
+    driver: bridge
+    internal: false

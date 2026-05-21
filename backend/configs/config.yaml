@@ -1,0 +1,57 @@
+environment: development
+
+server:
+  port: 8080
+  host: 0.0.0.0
+  read_timeout: 15
+  write_timeout: 15
+
+database:
+  host: localhost
+  port: 5432
+  user: tygrsec-academy
+  password: tygrsec-academy_password
+  name: tygrsec-academy
+  ssl_mode: disable
+
+redis:
+  host: localhost
+  port: 6379
+  password: ""
+  db: 0
+
+jwt:
+  secret: your-secret-key-change-in-production-minimum-32-characters-long
+  access_token_ttl: 60  # minutes
+  refresh_token_ttl: 7  # days
+
+docker:
+  host: unix:///var/run/docker.sock
+  network: tygrsec-academy-labs
+  max_containers: 100
+  default_ttl: 60  # minutes
+
+cors:
+  allow_origins:
+    - http://localhost:3000
+    - http://localhost:8080
+
+oauth:
+  github_client_id: ""
+  github_client_secret: ""
+  google_client_id: ""
+  google_client_secret: ""
+
+email:
+  smtp_host: smtp.gmail.com
+  smtp_port: 587
+  smtp_user: ""
+  smtp_password: ""
+  from_email: noreply@tygrsec-academy.io
+
+ai:
+  openai_key: ""
+  anthropic_key: ""
+  default_model: gpt-4
+  max_tokens: 2000
+  temperature: 0.7

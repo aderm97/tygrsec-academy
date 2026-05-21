@@ -1,0 +1,99 @@
+version: '3.8'
+
+# Simplified Docker Compose without building from source
+# Uses pre-built images and bind mounts for development
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: securecoder-postgres
+    environment:
+      POSTGRES_USER: securecoder
+      POSTGRES_PASSWORD: securecoder_password
+      POSTGRES_DB: securecoder
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U securecoder"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: securecoder-redis
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Backend API (Development mode with hot reload)
+  backend:
+    image: golang:1.22-alpine
+    container_name: securecoder-backend
+    working_dir: /app
+    environment:
+      SECURECODER_ENVIRONMENT: development
+      SECURECODER_SERVER_PORT: 8080
+      SECURECODER_DATABASE_HOST: postgres
+      SECURECODER_DATABASE_PORT: 5432
+      SECURECODER_DATABASE_USER: securecoder
+      SECURECODER_DATABASE_PASSWORD: securecoder_password
+      SECURECODER_DATABASE_NAME: securecoder
+      SECURECODER_DATABASE_SSL_MODE: disable
+      SECURECODER_REDIS_HOST: redis
+      SECURECODER_REDIS_PORT: 6379
+      SECURECODER_JWT_SECRET: your-secret-key-change-in-production-minimum-32-characters-long
+      SECURECODER_CORS_ALLOW_ORIGINS: "http://localhost:3000"
+    ports:
+      - "8080:8080"
+    volumes:
+      - ../backend:/app
+    command: >
+      sh -c "apk add --no-cache git && 
+             go mod download && 
+             go run cmd/api/main.go"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - securecoder
+
+  # Frontend (Development mode)
+  frontend:
+    image: node:20-alpine
+    container_name: securecoder-frontend
+    working_dir: /app
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8080
+      NODE_ENV: development
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../frontend:/app
+    command: >
+      sh -c "npm install && npm run dev"
+    depends_on:
+      - backend
+    networks:
+      - securecoder
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  securecoder:
+    driver: bridge
