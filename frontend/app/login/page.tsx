@@ -85,12 +85,7 @@ export default function LoginPage() {
           </form>
         </div>
 
-        {/* Demo hint */}
-        <div className="mt-4 p-3 rounded border border-border bg-muted/30 text-xs text-muted-foreground">
-          <p className="font-semibold text-foreground mb-1">Demo credentials</p>
-          <p>Email: <span className="font-mono text-foreground">hacker123@tygrsec-academy.dev</span></p>
-          <p>Password: <span className="font-mono text-foreground">Password123!</span></p>
-        </div>
+        {/* Demo hint removed */}
       </div>
     </div>
   );
